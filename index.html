@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Franklin Chronicles & Almanac</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=IM+Fell+English:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-parchment: #f2e8cf;
+            --card-bg: #eae0c8;
+            --ink-black: #1b1715;
+            --faded-ink: #3b332f;
+            --brass-gold: #a88132;
+            --liberty-blue: #1d3557;
+            --seal-red: #7f1d1d;
+            --border-dark: #2c2520;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-parchment);
+            background-image: 
+                radial-gradient(#1b1715 0.5px, transparent 0.5px), 
+                radial-gradient(#1b1715 0.5px, var(--bg-parchment) 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            color: var(--ink-black);
+            font-family: 'IM Fell English', 'Georgia', serif;
+            margin: 0;
+            padding: 2rem 1rem;
+            line-height: 1.7;
+        }
+
+        .paper-frame {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: var(--bg-parchment);
+            border: 3px double var(--border-dark);
+            outline: 8px solid var(--bg-parchment);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        /* Decorative Corner Accents */
+        .paper-frame::before, .paper-frame::after {
+            content: "✦";
+            position: absolute;
+            top: 10px;
+            font-size: 1.5rem;
+            color: var(--brass-gold);
+        }
+        .paper-frame::before { left: 10px; }
+        .paper-frame::after { right: 10px; }
+
+        /* Header / Banner */
+        header {
+            text-align: center;
+            border-bottom: 4px double var(--border-dark);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sub-header-date {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            padding: 0.3rem 0;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--faded-ink);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin: 0.5rem 0;
+            color: var(--ink-black);
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px var(--brass-gold);
+        }
+
+        .tagline {
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--seal-red);
+            margin: 0;
+        }
+
+        /* Tab Navigation Bar */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-dark);
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--ink-black);
+            border: 2px solid var(--border-dark);
+            padding: 0.6rem 1.2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 2px 2px 0px var(--border-dark);
+            letter-spacing: 1px;
+        }
+
+        .tab-btn:hover {
+            background-color: var(--brass-gold);
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background-color: var(--liberty-blue);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 3px 4px 0px var(--border-dark);
+        }
+
+        /* Tab Content Panes */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Layouts */
+        .card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--brass-gold);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--seal-red);
+            border-bottom: 2px solid var(--border-dark);
+            padding-bottom: 0.3rem;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            float: left;
+            line-height: 2.8rem;
+            padding-top: 4px;
+            padding-right: 8px;
+            padding-left: 3px;
+            color: var(--liberty-blue);
+            font-weight: 700;
+        }
+
+        /* Almanac Quote Box */
+        .quote-box {
+            background-color: var(--card-bg);
+            border: 2px solid var(--brass-gold);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin: 1rem 0;
+            color: var(--ink-black);
+        }
+
+        .btn-wisdom {
+            background-color: var(--liberty-blue);
+            color: #ffffff;
+            border: 2px solid var(--border-dark);
+            padding: 0.6rem 1.4rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border-dark);
+            transition: 0.2s;
+        }
+
+        .btn-wisdom:hover {
+            background-color: var(--seal-red);
+        }
+
+        /* Grid layout for timeline or features */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            border-top: 3px double var(--border-dark);
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--faded-ink);
+        }
+
+        .seal {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--seal-red);
+            color: var(--bg-parchment);
+            line-height: 50px;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            border: 2px dashed var(--brass-gold);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="paper-frame">
+        
+        <header>
+            <div class="sub-header-date">
+                <span>Vol. I — No. 1706</span>
+                <span>Philadelphia, Pennsylvania</span>
+                <span>Price: Two Pence</span>
+            </div>
+            <h1>The Coradin Gazette</h1>
+            <h2>Benjamin Franklin Chronicles</h2>
+            <p class="tagline">"Printed & Published by G. Briones & S. Nisar, Postmaster Generals"</p>
+
+        </header>
+
+        <!-- Multi-Tab Navigation Buttons -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-gazette')">The Gazette</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-inventions')">Inventions & Science</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-almanac')">Poor Richard's Almanac</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-timeline')">Biography & Timeline</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-impact')">LongTerm Impact</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-facts')">Facts About Franklin</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-vocab')">Vocabulary</button>
+        </nav>
+
+        <!-- TAB 1: THE GAZETTE -->
+        <div id="tab-gazette" class="tab-content active">
+            <div class="card">
+                <h2>The Life & Endeavors of Mr. Franklin</h2>
+                <p class="drop-cap">
+                    Benjamin Franklin was born in Boston in 1706 and rose to become one of the most distinguished polymaths of the Western world. As a printer, author, diplomat, and philosopher, his contributions laid the cornerstone for American democracy and scientific discovery.
+                </p>
+                <p>
+                    In public service, Mr. Franklin created the lightning rod, helping prevent fire all around the colonies. His work in electricity and his experiments with the kite and key were groundbreaking. 
+                </p>
+            </div>
+            <div class="card">
+                <h2>The Invention of the Lightning Rod</h2>
+                <ol style="padding-left: 1.2rem; margin: 0;">
+                    <li><strong>Studied Static Electricity:</strong> Began extensive experiments with electrical equipment and batteries to understand how electrical charge behaves .</li>
+                    <li><strong>Proposed the Concept:</strong> Suggested that mounting Rods could provide a path for electrical discharge safely into the ground.</li>
+                    <li><strong>Published Theories:</strong> Published this theory in his writings/books.</li>
+                    <li><strong>Kite Experiment:</strong> Flew a kite through a thunderstorm and proved that storm clouds carry electrical energy</li>
+                    <li><strong>Build the First Lightning Rod:</strong> Installed a Rod on his House and tested how it safely conducted electricity to the ground.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- TAB 2: INVENTIONS & SCIENCE -->
+        <div id="tab-inventions" class="tab-content">
+            <div class="grid-2">
+                <div class="card" style="margin-bottom:0;">
+                    <h2>The Lightning Rod</h2>
+                    <p>In the 1700s, lightning was dangerous because wood easily caught fire. This could be a major issue for any lumber yards, forests, and structures that used any wood at all His invention safely guided atmospheric electricity into the ground through the use of brass wires and iron rods.</p>
+                </div>
+                <div class="card" style="margin-bottom:0;">
+                    <h2>Most Common Use</h2>
+                    <p>House and barns hold cash crops were some of the most common uses for the lightning rod. It would help redirect the lightning to avoid damaging these structures along with the cash crops. This would prove to be very important to the agricultural community.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: POOR RICHARD'S ALMANAC -->
+        <div id="tab-almanac" class="tab-content">
+            <div class="quote-box">
+                <h3 style="font-family: 'Cinzel', serif; color: var(--liberty-blue);">Daily Wisdom Generator</h3>
+                <p class="quote-text" id="quote-display">"An investment in knowledge pays the best interest."</p>
+                <button class="btn-wisdom" onclick="generateQuote()">Dispense New Wisdom</button>
+            </div>
+            <div class="card">
+                <h2>The Publication</h2>
+                <p>The Daily Wisdom Generator is a feature that provides users with inspirational quotes and sayings to motivate and guide them throughout their day.</p>
+            </div>
+            <div class="card">
+                <h2>What is it?</h2>
+                <p>Poor Richard's Almanac was a yearly publication that contained weather forecasts, proverbs, and other useful information for the average person. (All Written by Benjamin Franklin)</p>
+            </div>
+        </div>
+
+        <!-- TAB 4: BIOGRAPHY & TIMELINE -->
+        <div id="tab-timeline" class="tab-content">
+            <div class="card">
+                <h2>Chronicles of a Founder</h2>
+                <ul style="padding-left: 1.2rem; margin: 0; line-height: 1.8;">
+                    <li><strong>1706:</strong> Born in Boston, Massachusetts on January 17.</li>
+                    <li><strong>1729:</strong> Becomes owner and publisher of <em>The Pennsylvania Gazette</em>.</li>
+                    <li><strong>1752:</strong> Conducts the famous electrical kite experiment.</li>
+                    <li><strong>1776:</strong> Helps draft the Declaration of Independence.</li>
+                    <li><strong>1790:</strong> Passes away on April 17 in Philadelphia at age 84.</li>
+                </ul>
+            </div>
+        </div>
+
+         <!-- TAB 5:LONGTERM IMPACT -->
+        <div id="tab-impact" class="tab-content">
+            <div class="card">
+                <h2>LongTerm Impact</h2>
+                <ul style="padding-left: 1.2rem; margin: 0; line-height: 1.8;">
+                    <li><strong>New Words:</strong>Words such as batteries, positive and negative, were coined by Benjamin Franklin. to help spark new ideas.</li>
+                    <li><strong>Lightning Rod:</strong> Helped prevent fire/ improved fire safety and awareness through the use of lightning rods (Metal rods used to divert lightning away from flamable items)</li>
+                    <li><strong>Intellectual Prowess:</strong> His intelegence was known for its depth and wisdom. This would later prove to be a defining characteristic of his legacy and empower the American people to lead on the advancements he had pioneered.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 6:FACTS  -->
+        <div id="tab-facts" class="tab-content">
+            <div class="card">
+                <h2>Facts About Benjamin Franklin</h2>
+                <ul style="padding-left: 1.2rem; margin: 0; line-height: 1.8;">
+                    <li><strong>Patented?:</strong> He distributed the knowledge of how to build it and did not patent the product so people can use it and save their lives.</li>
+                    <li><strong>Myth of the Kite:</strong> Franklin's kite never got hit by lightning; rather, it was charged by an ambient electrical charge from the storm.</li>
+                    <li><strong>The Protector of Homes:</strong> His lightning rod is still used today to help protect millions of homes and buildings from lightning.</li>
+                    <li><strong>Original?:</strong> Not the first to suggest that idea, nor even the first to perform the experiment.</li>
+                    <li><strong>The Theory of Lightning:</strong> He hypothesized that lightning was simply a bigger and larger form of static electricity.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 7:VOCABULARY  -->
+        <div id="tab-vocab" class="tab-content">
+            <div class="card">
+                <h2>Vocabulary Words</h2>
+                <ul style="padding-left: 1.2rem; margin: 0; line-height: 1.8;">
+                    <li><strong>Cash Crops:</strong> Agricultural products grown for sale and profit rather than for subsistence. Having lightning strikes hit cash crop barns, it can reduce the amount of money being made. His invention of the lightning rod helped protect these valuable assets.</li>
+                    <li><strong>Mercantilism :</strong> An economic theory that emphasizes the importance of exports and the accumulation of precious metals like gold and silver. Now, he shows the American intelligence by making his own ideas and inventions.</li>
+                    <li><strong>Indentured Servants:</strong> Urban Tradesmen had to create and install the lightning rods that he had invented. This required significant labor and expertise. Thus opening up new opportunities for skilled craftsmen.</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <div class="seal">BF</div>
+            <p>&copy; 1706–2026 Philadelphia Printing House. Styled in Authentic Colonial Serif.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Tab Switching Logic
+        function switchTab(evt, tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Random Quote Generator
+        const quotes = [
+        // Benjamin Franklin Quotes    
+            "An investment in knowledge pays the best interest.",
+            "Early to bed and early to rise makes a man healthy, wealthy, and wise.",
+            "Tell me and I forget. Teach me and I remember. Involve me and I learn.",
+            "Well done is better than well said.",
+            "Never leave that till tomorrow which you can do today.",
+            "He that can have patience can have what he will.",
+            "Beware of little expenses; a small leak will sink a great ship.",
+        // Gabe's Quotes
+            "Even if the road is bumpy, it will lead you to the right place.",
+            "Life may never be perfect. So cherish moments that make it feel like it is."  ,
+            "To start the journey, you must first take the first step.", 
+            "Don't make them a priority if they make you an option.",
+            "Never put anything less than 101%.",   
+
+        ];
+
+        function generateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById("quote-display").innerText = `"${quotes[randomIndex]}"`;
+        }
+    </script>
+
+</body>
+</html>
